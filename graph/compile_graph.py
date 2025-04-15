@@ -1,12 +1,11 @@
 from langgraph.graph import END, StateGraph, START
-from retrieval_grader import retriever
-from rag_chain import rag_chain
-from retrieval_grader import retrieval_grader
-from question_rewriter import question_rewriter
-from graph import GraphState
-from graph import *
+from retriever.retrieval_grader import retrieval_grader
+from tools.rag_chain import rag_chain
+from tools.question_rewriter import question_rewriter
+from graph.graph import *
 from langchain.tools import Tool
 from langgraph.prebuilt import ToolNode
+from retriever.vector_store import retriever
 
 
 workflow = StateGraph(GraphState)
@@ -16,8 +15,7 @@ workflow.add_node("retrieve", retrieve)  # retrieve
 workflow.add_node("grade_documents", grade_documents)  # grade documents
 workflow.add_node("generate", generate)  # generatae
 workflow.add_node("transform_query", transform_query)  # transform_query
-# workflow.add_node("web_search_node", web_search)  # web search
-workflow.add_node("web_search_node", web_search)
+workflow.add_node("web_search_node", web_search)  # web search
 
 # Build graph
 workflow.add_edge(START, "retrieve")

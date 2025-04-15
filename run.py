@@ -1,9 +1,10 @@
 import os
-# os.environ["LANGSMITH_API_KEY"] = ""
-# os.environ["LANGSMITH_TRACING"] = "true"
+
+os.environ["LANGSMITH_API_KEY"] = ""
+os.environ["LANGSMITH_TRACING"] = "true"
 
 from pprint import pprint
-from compile_graph import app
+from graph.compile_graph import app
 # # Run
 # inputs = {"question": "What are the types of agent memory?"}
 # for output in app.stream(inputs):

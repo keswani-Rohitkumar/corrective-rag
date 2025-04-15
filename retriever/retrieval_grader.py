@@ -1,11 +1,9 @@
 ### Retrieval Grader
-
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_ollama import ChatOllama
-
 from pydantic import BaseModel, Field
-from vector_store import retriever
+from retriever.vector_store import retriever
 
 # Data model
 class GradeDocuments(BaseModel):
@@ -15,9 +13,6 @@ class GradeDocuments(BaseModel):
         description="Documents are relevant to the question, 'yes' or 'no'"
     )
 
-
-# LLM with function call
-# llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0)
 
 chat = ChatOllama(model='llama3.2')
 structured_llm_grader = chat.with_structured_output(GradeDocuments)

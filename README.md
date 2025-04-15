@@ -27,10 +27,12 @@ CRAG enhances the standard RAG pipeline by:
 
     LangGraph – for building a dynamic, self-reflective RAG workflow
 
+    LangSmith – for tracing, debugging, and monitoring the execution of the RAG pipeline
+
     DuckDuckGo Search (via tool) – to supplement retrieval with real-time web data
 
     LLama 3.2 3B (via Ollama) – local language model used for grading, query rewriting, and final generation
 
     Hugging Face Embeddings – for dense retrieval of relevant documents
 
-    
+    FAISS – used as the vector store for efficient similarity search over embeddings

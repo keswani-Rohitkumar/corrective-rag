@@ -1,12 +1,7 @@
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.vectorstores import FAISS
-# from langchain_openai import OpenAIEmbeddings
-
 from ollama import embeddings as OllamaEmbeddings
-
-# embedding = OllamaEmbeddings(model='nomic-embed-text')
-# from ollama import Chroma
 from langchain.embeddings import HuggingFaceEmbeddings
 
 embedding = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")

@@ -3,8 +3,8 @@
 from langchain import hub
 from langchain_core.output_parsers import StrOutputParser
 from langchain_ollama import ChatOllama
-from retrieval_grader import docs, question
-from web_search_tool import *
+from retriever.retrieval_grader import docs, question
+from tools.web_search_tool import *
 
 prompt = hub.pull("rlm/rag-prompt")
 
