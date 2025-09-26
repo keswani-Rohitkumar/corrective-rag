@@ -1,8 +1,3 @@
-import os
-
-os.environ["LANGSMITH_API_KEY"] = ""
-os.environ["LANGSMITH_TRACING"] = "true"
-
 from pprint import pprint
 from graph.compile_graph import app
 # # Run

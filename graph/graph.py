@@ -99,6 +99,8 @@ def grade_documents(state):
     return {"documents": filtered_docs, "question": question, "web_search": web_search}
 
 
+import re
+
 def transform_query(state):
     """
     Transform the query to produce a better question.
@@ -115,14 +117,22 @@ def transform_query(state):
     documents = state["documents"]
     print(f"---QUESTION: {question}---")
     print(f"---DOCUMENTS: {documents}---")
+
     # Re-write question
-    rewritten  = question_rewriter.invoke({"question": question})
+    rewritten = question_rewriter.invoke({"question": question})
+
+    # Try regex extraction
     match = re.search(r'([^.?\n]*\?)', rewritten)
-    better_question = match.group(0).strip()
-    # match = re.search(r'"([^"]+)"', rewritten)
-    # better_question = match.group(1) if match else rewritten.strip()
+
+    if match:
+        better_question = match.group(0).strip()
+    else:
+        # Fallback: use rewritten string or original question
+        better_question = rewritten.strip() if rewritten else question.strip()
+
     print(f"---BETTER QUESTION: {better_question}---")
     return {"documents": documents, "question": better_question}
+
 
 
 def web_search(state):
@@ -144,8 +154,18 @@ def web_search(state):
     # docs = search_tool.run({"query": question})
     docs = search_tool.run(question)
     # web_results = "\n".join([d["content"] for d in docs])
-    web_results = Document(page_content=docs)
-    documents.append(web_results)
+    if isinstance(docs, list):
+        web_results = [
+            Document(
+                page_content=d.get("title") or d.get("content") or str(d),
+                metadata=d,
+            )
+            for d in docs
+        ]
+    else:
+        web_results = [Document(page_content=str(docs), metadata={"source": "web_search"})]
+
+    documents.extend(web_results)
 
     return {"documents": documents, "question": question}
 

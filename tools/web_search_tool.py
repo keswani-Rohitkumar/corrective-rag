@@ -1,12 +1,12 @@
-from langchain_community.tools import DuckDuckGoSearchRun
+from langchain_community.tools import TavilySearchResults
 from langchain.tools import Tool
+
+# Instantiate once
+ddg_search = TavilySearchResults(tavily_api_key = "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")
 
 def get_search_results(query: str) -> str:
     """Fetches search results from DuckDuckGo."""
-    # Perform the search using DuckDuckGoSearchRun
-    search_tool = DuckDuckGoSearchRun()
-    results = search_tool.invoke(query)
-    return results
+    return ddg_search.invoke(query)
 
 search_tool = Tool(
     name="get_search_results",
